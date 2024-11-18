@@ -71,7 +71,7 @@ public class JavaStreamListNumebrExample
 
     // -----------------4. Get Number starting with 2 ---------------------------
 
-    ist<Integer> numStartingWithTwo = list.stream().map(num->String.valueOf(num)).filter(num->num.startsWith("2")).map(Integer::valueOf).collect(Collectors.toList());
+    List<Integer> numStartingWithTwo = list.stream().map(num->String.valueOf(num)).filter(num->num.startsWith("2")).map(Integer::valueOf).collect(Collectors.toList());
     System.out.println(numStartingWithTwo); 
     
     List<Integer> numStartingWithTwo1 = list.stream().map(String::valueOf).filter(num->num.startsWith("2")).map(Integer::valueOf).collect(Collectors.toList());
@@ -80,7 +80,40 @@ public class JavaStreamListNumebrExample
     // O/P : 
     // [2, 222, 24]
     // [2, 222, 24]
-    
+
+   // ------------------5. Get Duplicate number in the array --------------------------
+   Set<Integer> duplicates = list.stream().filter(num -> Collections.frequency(list,num) > 1).collect(Collectors.toSet());
+   System.out.println("Duplicate set : " + dup);
+   //O/P : Duplicate set : [9]
+
+   // Java Set add() methoda return value as false if the element is already present in the Set		
+   Set<Integer> isDuplicate = new HashSet<>();
+   list.stream().filter(num -> !isDuplicate.add(num)).collect(Collectors.toSet());
+   System.out.println("Second Approach Duplicate set : " + dup);
+
+   // ------------------6. Get Max and Min value---------------------------------------
+   int max = list.stream().max(Comparator.comparing(Integer::valueOf)).get();
+   System.out.println("Max value : " + max);
+// O/P: Max value : 222        
+   int min = list.stream().min(Comparator.comparing(Integer::valueOf)).get();
+   System.out.println("Max value : " + min);
+// O/P: Max value : 1
+
+
+// ------------------6. Sort list in Ascending and Descending Order---------------------------------------
+
+List<Integer> asc = list.stream().sorted().collect(Collectors.toList());
+System.out.println("ASC : " + asc);
+        
+List<Integer> desc = list.stream().sorted(Collections.reverseOrder()).collect(Collectors.toList());
+System.out.println("ASC : " + desc);
+// ASC : [1, 2, 4, 5, 7, 8, 9, 9, 24, 36, 78, 222]
+// DESC : [222, 78, 36, 24, 9, 9, 8, 7, 5, 4, 2, 1]
+   
+
+
+
+   		
     
   }
 }
